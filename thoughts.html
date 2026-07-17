@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Imani — Thoughts</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&family=Bodoni+Moda:ital,opsz,wght@0,6..96,300;0,6..96,700;1,6..96,300;1,6..96,700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --cream:#FAF7F2;--warm:#FFFDF9;--ink:#18130F;--ink2:#3A3028;
+  --muted:#9A8778;--accent:#C4622D;--asoft:#F0D9C8;
+  --green:#2D5016;--gsoft:#D6E8C4;--b:rgba(24,19,15,0.1);
+}
+html{scroll-behavior:smooth}
+body{background:var(--cream);color:var(--ink);font-family:'DM Sans',sans-serif;overflow-x:hidden;cursor:none}
+#dot{width:8px;height:8px;background:var(--accent);border-radius:50%;position:fixed;top:0;left:0;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width .15s,height .15s}
+#ring{width:32px;height:32px;border:1px solid var(--accent);border-radius:50%;position:fixed;top:0;left:0;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);opacity:.5;transition:all .3s ease}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:0 4rem;height:64px;display:flex;align-items:center;justify-content:space-between;background:rgba(250,247,242,.95);backdrop-filter:blur(16px);border-bottom:1px solid var(--b)}
+.logo{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:600;color:var(--ink);text-decoration:none}
+.logo span{color:var(--accent)}
+.nav-links{display:flex;gap:2.5rem;list-style:none}
+.nav-links a{font-size:12px;font-weight:400;color:var(--muted);text-decoration:none;letter-spacing:.08em;text-transform:uppercase;transition:color .2s}
+.nav-links a:hover,.nav-links a.active{color:var(--ink)}
+
+/* IMANI HERO */
+.page-hero {
+  min-height: 100vh;
+  background: var(--ink);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 0 4rem 6rem;
+  border-bottom: 1px solid rgba(250,247,242,.08);
+  position: relative;
+  overflow: hidden;
+}
+.page-hero::before {
+  content:'';
+  position:absolute; top:80px; right:4rem;
+  width:1px; height:40%;
+  background:linear-gradient(to bottom, transparent, rgba(250,247,242,.06), transparent);
+}
+.ph-label {
+  font-size:11px; letter-spacing:.15em; text-transform:uppercase;
+  color:rgba(250,247,242,.25); margin-bottom:2rem;
+  opacity:0; animation:fadeUp .8s ease .1s forwards;
+}
+.ph-h {
+  font-family:'Bodoni Moda',serif;
+  font-size:clamp(4rem,9vw,8.5rem);
+  font-weight:700; line-height:1.02;
+  letter-spacing:-.02em;
+  color:var(--cream);
+  opacity:0; animation:fadeUp .9s ease .2s forwards;
+}
+.ph-h em { font-style:italic; color:var(--accent); }
+.ph-sub {
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.2rem; font-weight:300; font-style:italic;
+  color:rgba(250,247,242,.4); line-height:1.75;
+  max-width:480px; margin-top:2.5rem;
+  opacity:0; animation:fadeUp .9s ease .4s forwards;
+}
+.ph-rule {
+  width:40px; height:1px;
+  background:var(--accent);
+  margin-bottom:2rem;
+  opacity:0; animation:fadeUp .8s ease .35s forwards;
+}
+
+/* MOOD FILTER */
+.mood-bar{padding:1.5rem 4rem;display:flex;align-items:center;gap:1rem;border-bottom:1px solid var(--b);overflow-x:auto;scrollbar-width:none}
+.mood-bar::-webkit-scrollbar{display:none}
+.mood-label{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);white-space:nowrap;margin-right:.5rem}
+.mood-btn{font-size:12px;letter-spacing:.06em;text-transform:uppercase;padding:7px 18px;border-radius:40px;border:1px solid var(--b);background:transparent;color:var(--muted);cursor:none;white-space:nowrap;transition:all .2s}
+.mood-btn:hover,.mood-btn.active{background:var(--ink);color:var(--cream);border-color:var(--ink)}
+.mood-btn[data-mood="listening"].active{background:var(--green);border-color:var(--green)}
+
+/* MASONRY GRID */
+.masonry{padding:4rem;columns:3;column-gap:1.5rem}
+.card{break-inside:avoid;margin-bottom:1.5rem;background:var(--warm);border:1px solid var(--b);border-radius:4px;overflow:hidden;transition:transform .25s,box-shadow .25s;display:block}
+.card:hover{transform:translateY(-4px);box-shadow:0 12px 40px rgba(24,19,15,.08)}
+.card[data-mood]{transition:opacity .3s,transform .3s}
+.card.hidden{opacity:0;pointer-events:none;position:absolute}
+
+.card-inner{padding:1.8rem}
+.card-mood{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:.8rem;display:flex;align-items:center;gap:.5rem}
+.mood-dot{width:6px;height:6px;border-radius:50%;background:var(--accent);display:inline-block}
+.mood-dot.life{background:var(--accent)}
+.mood-dot.creative{background:#7B6BAF}
+.mood-dot.random{background:var(--green)}
+.mood-dot.reflections{background:#B8961A}
+.mood-dot.listening{background:var(--green)}
+.card-title{font-family:'Bodoni Moda',serif;font-size:1.2rem;font-weight:700;color:var(--ink);margin-bottom:.7rem;line-height:1.2}
+.card-excerpt{font-size:13px;line-height:1.8;color:var(--muted)}
+.card-footer{padding:.8rem 1.8rem;border-top:1px solid var(--b);display:flex;justify-content:space-between;align-items:center}
+.card-date{font-size:11px;color:var(--muted);letter-spacing:.04em}
+.card-read{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent)}
+
+/* LISTENING CARD */
+.card.listening-card .card-inner{background:var(--ink);color:var(--cream)}
+.card.listening-card .card-mood{color:rgba(250,247,242,.4)}
+.card.listening-card .card-title{color:var(--cream)}
+.card.listening-card .card-excerpt{color:rgba(250,247,242,.5)}
+.waveform{display:flex;align-items:center;gap:3px;height:32px;margin:1rem 0}
+.waveform span{display:inline-block;width:3px;background:var(--accent);border-radius:2px;animation:wave var(--d,.8s) ease-in-out infinite alternate}
+@keyframes wave{from{height:4px}to{height:var(--h,20px)}}
+.card.listening-card .card-footer{border-color:rgba(250,247,242,.08);background:rgba(255,255,255,.03)}
+.card.listening-card .card-date{color:rgba(250,247,242,.3)}
+
+/* READING & LISTENING */
+.read-listen{padding:5rem 4rem;background:var(--ink);color:var(--cream);display:grid;grid-template-columns:1fr 1fr;gap:4rem}
+.rl-section h3{font-family:'Bodoni Moda',serif;font-size:1.4rem;font-weight:700;color:var(--cream);margin-bottom:2rem;padding-bottom:1rem;border-bottom:1px solid rgba(250,247,242,.1)}
+.rl-list{list-style:none;display:flex;flex-direction:column;gap:1rem}
+.rl-list li{display:flex;justify-content:space-between;align-items:baseline;padding-bottom:1rem;border-bottom:1px solid rgba(250,247,242,.06)}
+.rl-item-name{font-size:14px;color:var(--cream)}
+.rl-item-by{font-size:12px;color:rgba(250,247,242,.35);font-style:italic}
+
+footer{border-top:1px solid var(--b);padding:2.5rem 4rem;display:flex;align-items:center;justify-content:space-between}
+.footer-logo{font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:600;color:var(--ink)}
+.footer-logo span{color:var(--accent)}
+.footer-note{font-size:12px;color:var(--muted)}
+
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease}
+.reveal.visible{opacity:1;transform:none}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+
+<div id="dot"></div>
+<div id="ring"></div>
+
+<nav>
+  <a href="index.html" class="logo">Oyin<span>.</span></a>
+  <ul class="nav-links">
+    <li><a href="about.html">About</a></li>
+    <li><a href="thoughts.html" class="active">Thoughts</a></li>
+    <li><a href="startup.html">Startup Talk</a></li>
+    <li><a href="creative.html">Creative</a></li>
+    <li><a href="startup.html#podcast">Podcast</a></li>
+  </ul>
+</nav>
+
+<section class="page-hero">
+  <p class="ph-label">You've found her</p>
+  <h1 class="ph-h">This is<br><em>Imani.</em></h1>
+  <div class="ph-rule"></div>
+  <p class="ph-sub">She thinks out loud. Writes in lowercase when she feels like it. Notices everything and says most of it. These are her thoughts — on life, creativity, people, music, and the things that don't fit anywhere else.</p>
+</section>
+
+<div class="mood-bar">
+  <span class="mood-label">Imani's moods →</span>
+  <button class="mood-btn active" data-mood="all">All</button>
+  <button class="mood-btn" data-mood="life">Life</button>
+  <button class="mood-btn" data-mood="creative">Creative</button>
+  <button class="mood-btn" data-mood="reflections">Reflections</button>
+  <button class="mood-btn" data-mood="random">Random</button>
+  <button class="mood-btn" data-mood="listening">Listening</button>
+</div>
+
+<section class="masonry reveal" id="cardGrid">
+
+  <div class="card" data-mood="life">
+    <div class="card-inner">
+      <div class="card-mood"><span class="mood-dot life"></span> Life</div>
+      <h3 class="card-title">On the art of being present in a city that never slows down</h3>
+      <p class="card-excerpt">Lagos taught me that stillness is a radical act. Everyone is moving, building, hustling — and somewhere in that, you have to carve out the space to just be.</p>
+    </div>
+    <div class="card-footer"><span class="card-date">May 2025</span><span class="card-read">Read →</span></div>
+  </div>
+
+  <div class="card listening-card" data-mood="listening">
+    <div class="card-inner">
+      <div class="card-mood"><span class="mood-dot listening"></span> Listening</div>
+      <h3 class="card-title">What's been on repeat this week</h3>
+      <div class="waveform">
+        <span style="--h:12px;--d:.6s"></span><span style="--h:24px;--d:.8s"></span><span style="--h:18px;--d:.5s"></span><span style="--h:28px;--d:.9s"></span><span style="--h:14px;--d:.7s"></span><span style="--h:22px;--d:.6s"></span><span style="--h:30px;--d:.8s"></span><span style="--h:16px;--d:.5s"></span><span style="--h:26px;--d:.9s"></span><span style="--h:20px;--d:.7s"></span><span style="--h:10px;--d:.6s"></span><span style="--h:28px;--d:.8s"></span>
+      </div>
+      <p class="card-excerpt">Fela Kuti in the morning. Something from Sade by noon. Whatever Arooj Aftab dropped last — on a loop until I understand why it makes me feel this way.</p>
+    </div>
+    <div class="card-footer"><span class="card-date">June 2025</span><span class="card-read">Playlist →</span></div>
+  </div>
+
+  <div class="card" data-mood="creative">
+    <div class="card-inner">
+      <div class="card-mood"><span class="mood-dot creative"></span> Creative</div>
+      <h3 class="card-title">What happens when I paint without a plan</h3>
+      <p class="card-excerpt">I started with blue. Then it became green. Then it became something that looks like grief or growth — I'm still not sure. That's probably the point.</p>
+    </div>
+    <div class="card-footer"><span class="card-date">April 2025</span><span class="card-read">Read →</span></div>
+  </div>
+
+  <div class="card" data-mood="reflections">
+    <div class="card-inner">
+      <div class="card-mood"><span class="mood-dot reflections"></span> Reflections</div>
+      <h3 class="card-title">What they don't tell you about ambition</h3>
+      <p class="card-excerpt">Ambition is a gift and a tax at the same time. It gives you drive and takes your peace. The trick is not to tame it — but to feed it the right things.</p>
+    </div>
+    <div class="card-footer"><span class="card-date">March 2025</span><span class="card-read">Read →</span></div>
+  </div>
+
+  <div class="card" data-mood="random">
+    <div class="card-inner">
+      <div class="card-mood"><span class="mood-dot random"></span> Random</div>
+      <h3 class="card-title">A thought I had at 10pm that refused to wait</h3>
+      <p class="card-excerpt">What if the reason we can't sleep is because we're processing the day in real time and the subconscious is just... slow? A friend called this "thought lag." I think she's onto something.</p>
+    </div>
+    <div class="card-footer"><span class="card-date">Feb 2025</span><span class="card-read">Read →</span></div>
+  </div>
+
+  <div class="card" data-mood="life">
+    <div class="card-inner">
+      <div class="card-mood"><span class="mood-dot life"></span> Life</div>
+      <h3 class="card-title">On being the person in the room who sees everything</h3>
+      <p class="card-excerpt">I am a chronic observer. In every room I enter, I'm watching the dynamics, the micro-expressions, the pauses. It's exhausting and completely involuntary.</p>
+    </div>
+    <div class="card-footer"><span class="card-date">Jan 2025</span><span class="card-read">Read →</span></div>
+  </div>
+
+  <div class="card listening-card" data-mood="listening">
+    <div class="card-inner">
+      <div class="card-mood"><span class="mood-dot listening"></span> Listening</div>
+      <h3 class="card-title">Albums that made me feel understood this month</h3>
+      <div class="waveform">
+        <span style="--h:20px;--d:.7s"></span><span style="--h:10px;--d:.5s"></span><span style="--h:26px;--d:.8s"></span><span style="--h:16px;--d:.6s"></span><span style="--h:28px;--d:.9s"></span><span style="--h:14px;--d:.7s"></span><span style="--h:22px;--d:.5s"></span><span style="--h:30px;--d:.8s"></span><span style="--h:18px;--d:.6s"></span><span style="--h:24px;--d:.9s"></span>
+      </div>
+      <p class="card-excerpt">Three albums. Fourteen cups of tea. A lot of sitting by the window just letting the sound do what words couldn't.</p>
+    </div>
+    <div class="card-footer"><span class="card-date">May 2025</span><span class="card-read">Listen →</span></div>
+  </div>
+
+  <div class="card" data-mood="creative">
+    <div class="card-inner">
+      <div class="card-mood"><span class="mood-dot creative"></span> Creative</div>
+      <h3 class="card-title">The Lagos Light Series — a note on what I was trying to capture</h3>
+      <p class="card-excerpt">There's a quality of light in Lagos around 5:30pm that exists nowhere else in the world. Golden, chaotic, holy. I tried to put it into mixed media. I'm not sure I succeeded but I made something true.</p>
+    </div>
+    <div class="card-footer"><span class="card-date">Dec 2024</span><span class="card-read">Read →</span></div>
+  </div>
+
+  <div class="card" data-mood="reflections">
+    <div class="card-inner">
+      <div class="card-mood"><span class="mood-dot reflections"></span> Reflections</div>
+      <h3 class="card-title">On building things slowly in a world that rewards speed</h3>
+      <p class="card-excerpt">We live in an era that celebrates rapid iteration, fast launches, and overnight virality. But some of the best work I've seen — and done — came from sitting with something long enough for it to become whole.</p>
+    </div>
+    <div class="card-footer"><span class="card-date">Nov 2024</span><span class="card-read">Read →</span></div>
+  </div>
+
+</section>
+
+<!-- READING & LISTENING -->
+<section class="read-listen reveal">
+  <div class="rl-section">
+    <h3>Currently Reading</h3>
+    <ul class="rl-list">
+      <li><span class="rl-item-name">Love in Colour</span><span class="rl-item-by">Bolu Babalola</span></li>
+    </ul>
+  </div>
+  <div class="rl-section">
+    <h3>Currently Listening</h3>
+    <ul class="rl-list">
+      <li><span class="rl-item-name">Acquired — The Story of Walt Disney</span><span class="rl-item-by">Podcast</span></li>
+      <li><span class="rl-item-name">Fola</span><span class="rl-item-by">Artist</span></li>
+    </ul>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">Oyin<span>.</span></div>
+  <p class="footer-note">A digital ecosystem — strategy, art, and everything in between.</p>
+</footer>
+
+<script>
+const dot=document.getElementById('dot'),ring=document.getElementById('ring');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;dot.style.left=mx+'px';dot.style.top=my+'px'});
+(function a(){rx+=(mx-rx)*.12;ry+=(my-ry)*.12;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(a)})();
+document.querySelectorAll('a,button').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{dot.style.width='4px';dot.style.height='4px';ring.style.width='52px';ring.style.height='52px';ring.style.opacity='.2'});
+  el.addEventListener('mouseleave',()=>{dot.style.width='8px';dot.style.height='8px';ring.style.width='32px';ring.style.height='32px';ring.style.opacity='.5'});
+});
+// Mood filter
+document.querySelectorAll('.mood-btn').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('.mood-btn').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    const mood=btn.dataset.mood;
+    document.querySelectorAll('.card').forEach(card=>{
+      if(mood==='all'||card.dataset.mood===mood){card.style.opacity='1';card.style.transform=''}
+      else{card.style.opacity='0.15';card.style.transform='scale(.97)'}
+    });
+  });
+});
+const obs=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('visible')}),{threshold:.1});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+</script>
+</body>
+</html>
