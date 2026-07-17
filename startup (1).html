@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Startup Talk — Oyinloluwa</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&family=Bodoni+Moda:ital,opsz,wght@0,6..96,300;0,6..96,700;1,6..96,300;1,6..96,700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --cream:#FAF7F2;--warm:#FFFDF9;--ink:#18130F;--ink2:#3A3028;--muted:#9A8778;
+  --accent:#C4622D;--asoft:#F0D9C8;--green:#2D5016;--gsoft:#D6E8C4;
+  --gold:#B8961A;--goldsoft:#F5ECC4;--purple:#5B3EA6;--purplesoft:#EDE8F5;
+  --blue:#1F6FEB;--bluesoft:#D6E8F5;--pbi:#F2C811;
+  --b:rgba(24,19,15,.1);--bh:rgba(24,19,15,.18);
+}
+html{scroll-behavior:smooth}
+body{background:var(--ink);color:var(--cream);font-family:'DM Sans',sans-serif;overflow-x:hidden;cursor:none}
+
+#dot{width:8px;height:8px;background:var(--accent);border-radius:50%;position:fixed;top:0;left:0;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width .15s,height .15s}
+#ring{width:32px;height:32px;border:1px solid var(--accent);border-radius:50%;position:fixed;top:0;left:0;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);opacity:.5;transition:width .2s,height .2s,opacity .2s}
+#dot.sm{width:4px;height:4px}#ring.sm{width:52px;height:52px;opacity:.2}
+
+/* NAV — dark version */
+nav{position:fixed;top:0;left:0;right:0;z-index:200;padding:0 4rem;height:64px;display:flex;align-items:center;justify-content:space-between;background:rgba(24,19,15,.92);backdrop-filter:blur(16px);border-bottom:1px solid rgba(255,255,255,.07)}
+.logo{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:600;color:rgba(255,255,255,.85);text-decoration:none}
+.logo b{color:var(--accent)}
+.nav-links{display:flex;gap:2.4rem;list-style:none}
+.nav-links a{font-size:11.5px;color:rgba(255,255,255,.35);text-decoration:none;letter-spacing:.1em;text-transform:uppercase;transition:color .2s;position:relative}
+.nav-links a::after{content:'';position:absolute;bottom:-2px;left:0;width:0;height:1px;background:var(--accent);transition:width .3s}
+.nav-links a:hover,.nav-links a.active{color:var(--accent)}
+.nav-links a:hover::after,.nav-links a.active::after{width:100%}
+.nav-cta{font-size:11px;letter-spacing:.1em;text-transform:uppercase;padding:8px 20px;border:1px solid rgba(255,255,255,.15);border-radius:2px;color:rgba(255,255,255,.55);text-decoration:none;transition:all .25s}
+.nav-cta:hover{background:var(--accent);color:#fff;border-color:var(--accent)}
+
+/* ═══ HERO — dark, authoritative ═══ */
+.hero{
+  min-height:100vh;background:var(--ink);
+  display:flex;flex-direction:column;justify-content:flex-end;
+  padding:8rem 4rem 5rem;position:relative;overflow:hidden;
+}
+.hero::before{content:'';position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(ellipse 60% 70% at 0% 100%,rgba(45,80,22,.2),transparent 60%),
+  radial-gradient(ellipse 50% 50% at 100% 0%,rgba(196,98,45,.12),transparent 55%)}
+.hero-ghost{
+  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  font-family:'Bodoni Moda',serif;font-size:28vw;font-weight:700;
+  color:rgba(255,255,255,.025);line-height:1;pointer-events:none;
+  letter-spacing:-.04em;white-space:nowrap;user-select:none;text-align:center;
+}
+/* vertical label */
+.hero-vert{
+  position:absolute;right:4rem;top:50%;transform:translateY(-50%) rotate(90deg);
+  font-size:10px;letter-spacing:.3em;text-transform:uppercase;
+  color:rgba(255,255,255,.15);transform-origin:center;white-space:nowrap;
+}
+.hero-eyebrow{font-size:10.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--accent);font-weight:500;margin-bottom:2rem;opacity:0;animation:fadeUp .7s ease .2s forwards;display:flex;align-items:center;gap:1rem}
+.hero-eyebrow::before{content:'';width:32px;height:1px;background:var(--accent);opacity:.6}
+.hero-title{font-family:'Bodoni Moda',serif;font-size:clamp(52px,8.5vw,120px);font-weight:700;line-height:.9;letter-spacing:-.025em;color:#fff;margin-bottom:2.5rem}
+.hl{display:block;overflow:hidden}
+.hli{display:block;opacity:0;transform:translateY(110%);animation:slideUp .95s cubic-bezier(.16,1,.3,1) forwards}
+.hl:nth-child(1) .hli{animation-delay:.3s}
+.hl:nth-child(2) .hli{animation-delay:.45s;color:var(--accent);font-style:italic}
+.hero-sub{font-size:16px;line-height:1.88;color:rgba(255,255,255,.5);font-weight:300;max-width:560px;margin-bottom:3rem;opacity:0;animation:fadeUp .9s ease 1s forwards}
+.hero-sub strong{color:rgba(255,255,255,.8);font-weight:500}
+.hero-actions{display:flex;gap:12px;flex-wrap:wrap;opacity:0;animation:fadeUp .9s ease 1.2s forwards}
+.btn-a{background:var(--accent);color:#fff;padding:13px 30px;border:none;border-radius:2px;font-family:'DM Sans',sans-serif;font-size:12px;letter-spacing:.1em;text-transform:uppercase;cursor:none;transition:opacity .2s,transform .2s;text-decoration:none;display:inline-flex;align-items:center;gap:8px}
+.btn-a:hover{opacity:.85;transform:translateY(-1px)}
+.btn-b{background:transparent;color:rgba(255,255,255,.6);padding:13px 30px;border:1px solid rgba(255,255,255,.15);border-radius:2px;font-family:'DM Sans',sans-serif;font-size:12px;letter-spacing:.1em;text-transform:uppercase;cursor:none;transition:all .2s;text-decoration:none;display:inline-flex;align-items:center;gap:8px}
+.btn-b:hover{border-color:rgba(255,255,255,.4);color:#fff;transform:translateY(-1px)}
+
+/* hero stat strip */
+.hero-stats{display:flex;gap:0;border-top:1px solid rgba(255,255,255,.08);margin-top:4rem;opacity:0;animation:fadeUp .9s ease 1.4s forwards}
+.hstat{flex:1;padding:1.5rem 0;border-right:1px solid rgba(255,255,255,.08)}
+.hstat:last-child{border-right:none}
+.hstat-n{font-family:'Cormorant Garamond',serif;font-size:36px;font-weight:300;color:#fff;line-height:1;margin-bottom:.2rem}
+.hstat-l{font-size:11px;color:rgba(255,255,255,.3);letter-spacing:.06em}
+
+/* ═══ SECTION DIVIDERS ═══ */
+.sec-div{display:flex;align-items:center;gap:2rem;padding:5rem 4rem 3rem;background:var(--ink)}
+.sec-div.light{background:var(--cream)}
+.sec-div-line{flex:1;height:1px;background:rgba(255,255,255,.07)}
+.sec-div.light .sec-div-line{background:var(--b)}
+.sec-div-label{font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.25);white-space:nowrap}
+.sec-div.light .sec-div-label{color:var(--muted)}
+.sec-div-num{font-family:'Cormorant Garamond',serif;font-size:36px;font-weight:300;color:rgba(255,255,255,.05);letter-spacing:-.02em}
+.sec-div.light .sec-div-num{color:rgba(24,19,15,.06)}
+
+/* ═══ SECTION 1 — FEATURED ESSAY ═══ */
+.featured{padding:0 4rem 5rem;background:var(--ink)}
+.feat-card{
+  display:grid;grid-template-columns:1fr 1fr;border:1px solid rgba(255,255,255,.08);
+  border-radius:3px;overflow:hidden;cursor:none;transition:border-color .3s;
+}
+.feat-card:hover{border-color:rgba(255,255,255,.16)}
+.feat-left{background:rgba(255,255,255,.03);padding:3rem;display:flex;flex-direction:column;justify-content:space-between;position:relative;overflow:hidden;min-height:360px}
+.feat-left::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 70% 70% at 0% 100%,rgba(45,80,22,.2),transparent 65%)}
+.feat-label{font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin-bottom:2rem;position:relative}
+.feat-big-title{font-family:'Bodoni Moda',serif;font-size:clamp(24px,3vw,36px);font-weight:700;color:#fff;line-height:1.1;position:relative}
+.feat-big-title em{font-style:italic;color:rgba(255,255,255,.45)}
+.feat-num{font-family:'Cormorant Garamond',serif;font-size:120px;font-weight:300;color:rgba(255,255,255,.04);position:absolute;bottom:-1rem;right:1rem;line-height:1;letter-spacing:-.04em}
+.feat-right{padding:3rem;background:var(--ink)}
+.feat-meta{font-size:11px;color:rgba(255,255,255,.3);letter-spacing:.06em;margin-bottom:1.2rem}
+.feat-title{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:600;color:var(--cream);line-height:1.2;margin-bottom:1.2rem}
+.feat-excerpt{font-size:14px;line-height:1.88;color:rgba(255,255,255,.45);font-weight:300;margin-bottom:2rem}
+.btn-c{background:rgba(255,255,255,.08);color:rgba(255,255,255,.7);padding:11px 24px;border:1px solid rgba(255,255,255,.12);border-radius:2px;font-family:'DM Sans',sans-serif;font-size:12px;letter-spacing:.09em;text-transform:uppercase;cursor:none;transition:all .2s;display:inline-flex;align-items:center;gap:8px}
+.btn-c:hover{background:var(--accent);color:#fff;border-color:var(--accent);transform:translateY(-1px)}
+
+/* ═══ SECTION 2 — ESSAYS GRID ═══ */
+.essays-section{background:var(--cream);padding:0 4rem 5rem}
+
+/* format filter */
+.format-filter{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:3rem}
+.ffbtn{padding:8px 20px;border-radius:100px;font-size:12px;letter-spacing:.06em;border:1px solid var(--b);background:transparent;color:var(--muted);cursor:none;transition:all .22s;font-family:'DM Sans',sans-serif}
+.ffbtn:hover{border-color:var(--bh);color:var(--ink)}
+.ffbtn.active{background:var(--ink);color:#fff;border-color:var(--ink)}
+.essay-count{margin-left:auto;font-size:12px;color:var(--muted);align-self:center}
+
+.essays-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+@media(max-width:1100px){.essays-grid{grid-template-columns:1fr 1fr}}
+
+.essay-card{
+  background:var(--warm);border:1px solid var(--b);border-radius:3px;
+  overflow:hidden;cursor:none;transition:transform .35s cubic-bezier(.16,1,.3,1),box-shadow .35s,border-color .25s;
+  position:relative;display:flex;flex-direction:column;
+}
+.essay-card:hover{transform:translateY(-4px);box-shadow:0 12px 32px rgba(24,19,15,.09);border-color:var(--bh)}
+.essay-card.hidden{display:none}
+.essay-bar{height:3px}
+.type-deep .essay-bar{background:var(--green)}
+.type-vc .essay-bar{background:var(--accent)}
+.type-framework .essay-bar{background:var(--gold)}
+.type-opinion .essay-bar{background:var(--purple)}
+
+.essay-body{padding:1.8rem;flex:1;display:flex;flex-direction:column}
+.essay-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem}
+.essay-type{font-size:10px;letter-spacing:.14em;text-transform:uppercase;font-weight:500;padding:3px 11px;border-radius:100px}
+.type-deep .essay-type{background:var(--gsoft);color:var(--green)}
+.type-vc .essay-type{background:var(--asoft);color:var(--accent)}
+.type-framework .essay-type{background:var(--goldsoft);color:var(--gold)}
+.type-opinion .essay-type{background:var(--purplesoft);color:var(--purple)}
+.essay-read{font-size:11px;color:var(--muted)}
+.essay-title{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:600;color:var(--ink);line-height:1.22;margin-bottom:.75rem}
+.essay-card.lg .essay-title{font-size:24px}
+.essay-excerpt{font-size:13px;line-height:1.72;color:var(--ink2);font-weight:300;margin-bottom:1.2rem;flex:1}
+.essay-footer{display:flex;align-items:center;justify-content:space-between;padding-top:1.1rem;border-top:1px solid var(--b)}
+.essay-date{font-size:11px;color:var(--muted)}
+.essay-arrow{width:30px;height:30px;border-radius:50%;border:1px solid var(--b);display:flex;align-items:center;justify-content:center;font-size:12px;color:var(--muted);transition:all .25s;flex-shrink:0}
+.type-deep:hover .essay-arrow{background:var(--green);color:#fff;border-color:var(--green)}
+.type-vc:hover .essay-arrow{background:var(--accent);color:#fff;border-color:var(--accent)}
+.type-framework:hover .essay-arrow{background:var(--gold);color:#fff;border-color:var(--gold)}
+.type-opinion:hover .essay-arrow{background:var(--purple);color:#fff;border-color:var(--purple)}
+
+/* ═══ SECTION 3 — DATA & ANALYSIS ═══ */
+.analysis-section{background:var(--ink);padding:0 4rem 5rem}
+.analysis-intro{max-width:600px;margin-bottom:3.5rem}
+.analysis-eyebrow{font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);font-weight:500;margin-bottom:.8rem}
+.analysis-title{font-family:'Bodoni Moda',serif;font-size:clamp(28px,4vw,48px);font-weight:700;color:#fff;line-height:1.05;margin-bottom:.8rem}
+.analysis-title em{font-style:italic;color:rgba(255,255,255,.35)}
+.analysis-desc{font-size:14px;line-height:1.82;color:rgba(255,255,255,.4);font-weight:300}
+
+/* tool tabs */
+.tool-tabs{display:flex;gap:2px;margin-bottom:3rem;flex-wrap:wrap}
+.ttab{padding:9px 22px;font-size:11.5px;letter-spacing:.07em;text-transform:uppercase;background:rgba(255,255,255,.05);color:rgba(255,255,255,.4);border:none;font-family:'DM Sans',sans-serif;cursor:none;transition:all .22s;border-radius:2px}
+.ttab:hover{background:rgba(255,255,255,.1);color:rgba(255,255,255,.7)}
+.ttab.active{background:var(--accent);color:#fff}
+.ttab[data-tool="tableau"].active{background:#1F6FEB}
+.ttab[data-tool="powerbi"].active{background:var(--pbi);color:var(--ink)}
+.ttab[data-tool="excel"].active{background:#217346}
+.ttab[data-tool="report"].active{background:var(--purple)}
+
+/* analysis cards */
+.analysis-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-bottom:3rem}
+@media(max-width:1100px){.analysis-grid{grid-template-columns:1fr 1fr}}
+
+.acard{background:rgba(255,255,255,.03);padding:2.2rem;cursor:none;transition:background .25s;border:1px solid rgba(255,255,255,.06);border-radius:2px}
+.acard:hover{background:rgba(255,255,255,.07)}
+.acard.hidden{display:none}
+
+.tool-badge{display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border-radius:100px;font-size:10px;letter-spacing:.12em;text-transform:uppercase;font-weight:500;margin-bottom:1.4rem}
+.tb-tableau{background:rgba(31,111,235,.15);color:#5E9BF5}
+.tb-powerbi{background:rgba(242,200,17,.12);color:#D4A800}
+.tb-excel{background:rgba(33,115,70,.15);color:#5EC28A}
+.tb-report{background:rgba(91,62,166,.15);color:#A68CE8}
+
+.acard-title{font-family:'Cormorant Garamond',serif;font-size:20px;color:var(--cream);line-height:1.25;margin-bottom:.7rem;font-weight:600}
+.acard-desc{font-size:13px;line-height:1.7;color:rgba(255,255,255,.35);font-weight:300;margin-bottom:1.6rem}
+.acard-foot{display:flex;align-items:center;justify-content:space-between;padding-top:1.2rem;border-top:1px solid rgba(255,255,255,.07)}
+.acard-date{font-size:11px;color:rgba(255,255,255,.22)}
+.open-link{display:inline-flex;align-items:center;gap:6px;padding:7px 16px;border-radius:2px;border:none;font-family:'DM Sans',sans-serif;font-size:11px;letter-spacing:.08em;text-transform:uppercase;cursor:none;transition:all .2s;text-decoration:none}
+.ol-tableau{background:rgba(31,111,235,.15);color:#5E9BF5}.ol-tableau:hover{background:#1F6FEB;color:#fff}
+.ol-powerbi{background:rgba(242,200,17,.12);color:#D4A800}.ol-powerbi:hover{background:var(--pbi);color:var(--ink)}
+.ol-excel{background:rgba(33,115,70,.15);color:#5EC28A}.ol-excel:hover{background:#217346;color:#fff}
+.ol-report{background:rgba(91,62,166,.15);color:#A68CE8}.ol-report:hover{background:var(--purple);color:#fff}
+
+/* embed area */
+.embed-wrap{border:1px solid rgba(255,255,255,.08);border-radius:3px;overflow:hidden}
+.embed-bar{display:flex;align-items:center;justify-content:space-between;padding:1rem 1.5rem;background:rgba(255,255,255,.03);border-bottom:1px solid rgba(255,255,255,.07)}
+.embed-bar-title{font-size:12px;color:rgba(255,255,255,.35);letter-spacing:.06em}
+.embed-bar-tools{display:flex;gap:.8rem}
+.etool{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.28);background:rgba(255,255,255,.05);border:none;padding:5px 12px;border-radius:2px;cursor:none;font-family:'DM Sans',sans-serif;transition:all .2s;text-decoration:none}
+.etool:hover{background:rgba(255,255,255,.1);color:rgba(255,255,255,.6)}
+.embed-placeholder{height:440px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.2rem;padding:2rem;text-align:center}
+.embed-icon{font-size:52px;opacity:.2}
+.embed-msg{font-size:13px;color:rgba(255,255,255,.22);line-height:1.75;max-width:420px;font-weight:300}
+.embed-msg strong{color:rgba(255,255,255,.45);font-weight:500}
+.embed-hint{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.18);border:1px dashed rgba(255,255,255,.1);padding:8px 20px;border-radius:100px}
+
+/* ═══ SECTION 4 — PODCAST ═══ */
+.podcast-section{background:var(--green);padding:0 4rem 5rem;position:relative;overflow:hidden}
+.podcast-section::after{content:'POD';font-family:'Bodoni Moda',serif;font-size:28vw;font-weight:700;color:rgba(255,255,255,.04);position:absolute;bottom:-2rem;right:-2rem;line-height:1;pointer-events:none;letter-spacing:-.04em}
+.podcast-inner{display:grid;grid-template-columns:1fr 1fr;gap:6rem;align-items:center;position:relative}
+.pod-left{}
+.pod-eyebrow{font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:1.2rem}
+.pod-title{font-family:'Bodoni Moda',serif;font-size:clamp(36px,5vw,62px);font-weight:700;color:#fff;line-height:.95;margin-bottom:1.5rem;letter-spacing:-.02em}
+.pod-title em{font-style:italic;color:rgba(255,255,255,.4)}
+.pod-desc{font-size:15px;line-height:1.88;color:rgba(255,255,255,.55);font-weight:300;margin-bottom:2.5rem;max-width:440px}
+.pod-topics{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:2.5rem}
+.pod-tag{padding:7px 16px;border:1px solid rgba(255,255,255,.15);border-radius:100px;font-size:12px;color:rgba(255,255,255,.45);letter-spacing:.05em;transition:all .25s;cursor:none}
+.pod-tag:hover{background:rgba(255,255,255,.1);color:#fff;border-color:rgba(255,255,255,.3)}
+.btn-pod{background:rgba(255,255,255,.1);color:#fff;padding:13px 28px;border:1px solid rgba(255,255,255,.2);border-radius:2px;font-family:'DM Sans',sans-serif;font-size:12px;letter-spacing:.1em;text-transform:uppercase;cursor:none;transition:all .25s;text-decoration:none;display:inline-flex;align-items:center;gap:10px;backdrop-filter:blur(4px)}
+.btn-pod:hover{background:rgba(255,255,255,.18);border-color:rgba(255,255,255,.4);transform:translateY(-1px)}
+.pod-right{}
+.pod-card{background:rgba(0,0,0,.2);border:1px solid rgba(255,255,255,.08);border-radius:3px;padding:2rem;margin-bottom:10px;cursor:none;transition:background .25s;border-left:3px solid transparent}
+.pod-card:hover{background:rgba(0,0,0,.3);border-left-color:rgba(255,255,255,.2)}
+.pod-card-ep{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.3);margin-bottom:.5rem}
+.pod-card-title{font-family:'Cormorant Garamond',serif;font-size:18px;color:rgba(255,255,255,.75);line-height:1.25;margin-bottom:.3rem}
+.pod-card-meta{font-size:11px;color:rgba(255,255,255,.28)}
+.pod-soon{background:rgba(255,255,255,.06);border:1px dashed rgba(255,255,255,.12);border-radius:3px;padding:1.5rem 2rem;text-align:center;margin-top:10px}
+.pod-soon-text{font-size:12px;color:rgba(255,255,255,.3);letter-spacing:.06em}
+
+/* ═══ SECTION 5 — VIDEO ═══ */
+.video-section{background:var(--cream);padding:0 4rem 5rem}
+.video-eyebrow{font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);font-weight:500;margin-bottom:.8rem}
+.video-title{font-family:'Bodoni Moda',serif;font-size:clamp(28px,3.5vw,44px);font-weight:700;color:var(--ink);line-height:1.05;margin-bottom:3rem}
+.video-title em{font-style:italic;color:var(--accent)}
+.video-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+@media(max-width:1000px){.video-grid{grid-template-columns:1fr 1fr}}
+
+.video-card{background:var(--warm);border:1px solid var(--b);border-radius:3px;overflow:hidden;cursor:none;transition:all .3s}
+.video-card:hover{transform:translateY(-4px);box-shadow:0 12px 32px rgba(24,19,15,.09);border-color:var(--bh)}
+.video-thumb{height:180px;background:var(--ink);position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.vthumb-bg{position:absolute;inset:0;opacity:.3;display:flex;align-items:center;justify-content:center;font-size:80px}
+.vthumb-bg.g{background:linear-gradient(135deg,#1E3A2F,#2D5016)}
+.vthumb-bg.o{background:linear-gradient(135deg,#3A1E0F,#C4622D22)}
+.vthumb-bg.b{background:linear-gradient(135deg,#1E2C3A,#1F6FEB22)}
+.play-btn{width:50px;height:50px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;font-size:16px;color:#fff;position:relative;z-index:1;transition:transform .25s,background .25s;padding-left:4px}
+.video-card:hover .play-btn{transform:scale(1.12);background:#fff;color:var(--accent)}
+.vtype-badge{position:absolute;top:1rem;left:1rem;background:rgba(24,19,15,.7);color:#fff;font-size:10px;letter-spacing:.1em;text-transform:uppercase;padding:4px 10px;border-radius:100px}
+.video-body{padding:1.6rem}
+.video-cat{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-bottom:.5rem}
+.video-title-sm{font-family:'Cormorant Garamond',serif;font-size:19px;font-weight:600;color:var(--ink);margin-bottom:.4rem;line-height:1.2}
+.video-meta{font-size:12px;color:var(--muted)}
+.video-coming{display:flex;align-items:center;justify-content:center;text-align:center;background:rgba(24,19,15,.92);cursor:none;min-height:252px}
+.coming-inner{padding:2rem}
+.coming-icon{font-size:38px;margin-bottom:1rem}
+.coming-label{font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--accent);margin-bottom:.6rem}
+.coming-title{font-family:'Cormorant Garamond',serif;font-size:22px;color:var(--cream);margin-bottom:.5rem}
+.coming-sub{font-size:12px;color:rgba(255,255,255,.3);line-height:1.6}
+
+/* ═══ SECTION 6 — NEWSLETTER ═══ */
+.nl-section{background:var(--ink);padding:6rem 4rem;display:flex;align-items:center;justify-content:space-between;gap:4rem;flex-wrap:wrap;position:relative;overflow:hidden}
+.nl-section::before{content:'';position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 50% 80% at 0% 50%,rgba(45,80,22,.15),transparent 55%)}
+.nl-left{position:relative}
+.nl-eyebrow{font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);margin-bottom:1rem}
+.nl-title{font-family:'Bodoni Moda',serif;font-size:clamp(28px,3.5vw,44px);font-weight:700;color:#fff;line-height:1.05;margin-bottom:1rem}
+.nl-title em{font-style:italic}
+.nl-sub{font-size:14px;color:rgba(255,255,255,.45);font-weight:300;max-width:380px}
+.nl-right{position:relative;min-width:320px}
+.nl-form{display:flex}
+.nl-input{flex:1;padding:14px 18px;border:none;background:rgba(255,255,255,.08);color:#fff;font-family:'DM Sans',sans-serif;font-size:14px;outline:none;border-radius:2px 0 0 2px}
+.nl-input::placeholder{color:rgba(255,255,255,.3)}
+.nl-btn{padding:14px 22px;background:var(--accent);color:#fff;border:none;font-family:'DM Sans',sans-serif;font-size:11px;letter-spacing:.1em;text-transform:uppercase;cursor:none;border-radius:0 2px 2px 0;transition:opacity .2s}
+.nl-btn:hover{opacity:.85}
+.nl-note{font-size:11px;color:rgba(255,255,255,.22);margin-top:.8rem}
+
+/* SLIDE PANEL */
+.overlay{position:fixed;inset:0;background:rgba(24,19,15,.6);z-index:300;opacity:0;pointer-events:none;transition:opacity .4s;backdrop-filter:blur(3px)}
+.overlay.open{opacity:1;pointer-events:all}
+.panel{position:fixed;top:0;right:0;bottom:0;width:min(700px,94vw);background:var(--warm);z-index:301;transform:translateX(105%);transition:transform .5s cubic-bezier(.16,1,.3,1);display:flex;flex-direction:column;overflow:hidden;box-shadow:-24px 0 60px rgba(24,19,15,.2)}
+.panel.open{transform:translateX(0)}
+.panel-header{padding:2rem 2.5rem 1.5rem;border-bottom:1px solid var(--b);display:flex;align-items:flex-start;justify-content:space-between;gap:1.5rem;flex-shrink:0}
+.panel-badge{display:inline-block;font-size:10px;letter-spacing:.14em;text-transform:uppercase;font-weight:500;padding:4px 12px;border-radius:100px;margin-bottom:.9rem}
+.panel-title{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:600;line-height:1.2;color:var(--ink);margin-bottom:.5rem}
+.panel-byline{font-size:12px;color:var(--muted);letter-spacing:.04em}
+.panel-close{width:38px;height:38px;border-radius:50%;border:1px solid var(--b);background:transparent;cursor:none;display:flex;align-items:center;justify-content:center;font-size:16px;color:var(--muted);transition:all .2s;flex-shrink:0;margin-top:4px}
+.panel-close:hover{background:var(--ink);color:#fff;border-color:var(--ink)}
+.panel-body{flex:1;overflow-y:auto;padding:2.5rem}
+.panel-body::-webkit-scrollbar{width:3px}
+.panel-body::-webkit-scrollbar-thumb{background:var(--b);border-radius:2px}
+.panel-lead{font-family:'Cormorant Garamond',serif;font-size:20px;font-style:italic;line-height:1.6;color:var(--ink2);margin-bottom:2rem;padding-bottom:2rem;border-bottom:1px solid var(--b)}
+.panel-content p{font-size:15px;line-height:1.92;color:var(--ink2);font-weight:300;margin-bottom:1.5rem}
+.panel-content p strong{font-weight:500;color:var(--ink)}
+.panel-content h3{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:600;color:var(--ink);margin:2rem 0 .8rem;line-height:1.2}
+.panel-content blockquote{border-left:3px solid var(--accent);padding-left:1.5rem;margin:2rem 0;font-family:'Cormorant Garamond',serif;font-size:20px;font-style:italic;color:var(--ink2);line-height:1.5}
+.panel-footer{padding:1.5rem 2.5rem;border-top:1px solid var(--b);flex-shrink:0;display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+.panel-tags{display:flex;gap:8px;flex-wrap:wrap}
+.panel-tag{padding:5px 14px;border-radius:100px;border:1px solid var(--b);font-size:11px;color:var(--muted)}
+.panel-share{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);cursor:none;background:none;border:none;font-family:'DM Sans',sans-serif;transition:color .2s}
+.panel-share:hover{color:var(--accent)}
+
+/* FOOTER */
+footer{background:rgba(255,255,255,.03);padding:3rem 4rem 2rem;border-top:1px solid rgba(255,255,255,.07);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem}
+.f-logo{font-family:'Cormorant Garamond',serif;font-size:20px;color:rgba(255,255,255,.7);text-decoration:none}
+.f-logo b{color:var(--accent)}
+.f-links{display:flex;gap:1.8rem;list-style:none}
+.f-links a{font-size:12px;color:rgba(255,255,255,.3);text-decoration:none;letter-spacing:.06em;transition:color .2s}
+.f-links a:hover{color:var(--accent)}
+.f-copy{font-size:11px;color:rgba(255,255,255,.15)}
+
+@keyframes slideUp{to{opacity:1;transform:translateY(0)}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.sr{opacity:0;transform:translateY(24px);transition:opacity .8s ease,transform .8s ease}
+.sr.on{opacity:1;transform:none}
+.d1{transition-delay:.08s}.d2{transition-delay:.16s}.d3{transition-delay:.24s}.d4{transition-delay:.32s}
+</style>
+</head>
+<body>
+<div id="dot"></div><div id="ring"></div>
+
+<nav>
+  <a href="index.html" class="logo">Oyinloluwa<b>.</b></a>
+  <ul class="nav-links">
+    <li><a href="about.html">About</a></li>
+    <li><a href="thoughts.html">Thoughts</a></li>
+    <li><a href="startup.html" class="active">Startup Talk</a></li>
+    <li><a href="#">Creative</a></li>
+    <li><a href="startup.html#podcast">Podcast</a></li>
+  </ul>
+  <a href="#" class="nav-cta">Shop — soon</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-ghost">STARTUP</div>
+  <p class="hero-vert">Oyinloluwa · Startup Talk · Est. 2026</p>
+  <p class="hero-eyebrow">Industry platform</p>
+  <h1 class="hero-title">
+    <span class="hl"><span class="hli">Building things</span></span>
+    <span class="hl"><span class="hli">that matter.</span></span>
+  </h1>
+  <p class="hero-sub">Deep dives, data analysis, VC breakdowns, and industry frameworks — for founders, operators, and investors who want <strong>honest, substantive takes</strong> on what's actually happening in business.</p>
+  <div class="hero-actions">
+    <a href="#essays" class="btn-a">Read the analysis <span>→</span></a>
+    <a href="#podcast" class="btn-b">The podcast <span>↗</span></a>
+  </div>
+  <div class="hero-stats">
+    <div class="hstat"><p class="hstat-n">12+</p><p class="hstat-l">Deep dives published</p></div>
+    <div class="hstat"><p class="hstat-n">6</p><p class="hstat-l">Data reports</p></div>
+    <div class="hstat"><p class="hstat-n">∞</p><p class="hstat-l">Opinions forming</p></div>
+    <div class="hstat"><p class="hstat-n">1</p><p class="hstat-l">Podcast — coming</p></div>
+  </div>
+</section>
+
+<!-- ═══ FEATURED ESSAY ═══ -->
+<div class="sec-div sr"><span class="sec-div-num">01</span><div class="sec-div-line"></div><span class="sec-div-label">Featured Analysis</span><div class="sec-div-line"></div></div>
+
+<div class="featured sr"
+  data-type="deep" data-type-label="Deep Dive"
+  data-title="Why the best startup ideas come from people who've actually worked in the industry"
+  data-date="May 2026" data-read="8 min read"
+  data-lead="The outsider narrative is compelling. But the data on who actually builds durable companies tells a different story."
+  data-tags="Startups,Founders,VC,Industry"
+  data-content="<p>There's a romanticised story we tell about startup founders. The outsider who sees what insiders are blind to. The dropout who disrupts an industry they've never worked in. It makes for a great narrative. It also misses what the data shows again and again.</p><h3>The insider advantage is real</h3><p>When you've actually worked in an industry — sat in the meetings, felt the friction, watched the workarounds people build because the existing tools are broken — you have something no amount of research can replicate. <strong>Lived frustration.</strong> And lived frustration is the most honest problem statement a founder can have.</p><p>The outsider can interview a hundred people and still miss the nuance of what it actually feels like to operate inside the system. The insider already knows. They've been quietly solving it manually for years.</p><h3>What the funding world gets wrong</h3><p>VCs love a good outsider story. But when I look at the startups that have genuinely changed how industries operate, most were built by people who worked inside and reached a breaking point.</p><blockquote>The best founders don't just see a problem. They've felt it in their body, every working day, for years.</blockquote><p>That embodied knowledge changes everything — how they design the product, how they talk to early customers, how they navigate incumbents. They're not translating. They're building from memory.</p>">
+  <div class="feat-card">
+    <div class="feat-left">
+      <div>
+        <p class="feat-label">Deep Dive · May 2026 · 8 min</p>
+        <h2 class="feat-big-title">The insider<br><em>advantage.</em></h2>
+      </div>
+      <div class="feat-num">01</div>
+    </div>
+    <div class="feat-right">
+      <p class="feat-meta">Why the best startup ideas come from industry insiders</p>
+      <h3 class="feat-title">Why the best startup ideas come from people who've actually worked in the industry</h3>
+      <p class="feat-excerpt">The outsider narrative is compelling. But the data on who actually builds durable companies tells a different — and more instructive — story.</p>
+      <button class="btn-c open-panel-btn">Read analysis <span>→</span></button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ ESSAYS ═══ -->
+<div class="sec-div light sr" id="essays"><span class="sec-div-num">02</span><div class="sec-div-line"></div><span class="sec-div-label">Essays & Deep Dives</span><div class="sec-div-line"></div></div>
+
+<div class="essays-section sr">
+  <div class="format-filter">
+    <span style="font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);align-self:center;margin-right:.3rem">Format</span>
+    <button class="ffbtn active" data-filter="all">All</button>
+    <button class="ffbtn" data-filter="deep">Deep Dive</button>
+    <button class="ffbtn" data-filter="vc">VC & Funding</button>
+    <button class="ffbtn" data-filter="framework">Frameworks</button>
+    <button class="ffbtn" data-filter="opinion">Opinion</button>
+    <span class="essay-count" id="essay-count">8 pieces</span>
+  </div>
+  <div class="essays-grid" id="essays-grid">
+
+    <div class="essay-card lg type-vc sr" data-etype="vc" data-etype-label="VC & Funding"
+      data-title="The VC funding gap is not a pipeline problem. It's a power problem."
+      data-date="December 2025" data-read="7 min"
+      data-lead="We've been having the wrong conversation about why certain founders don't get funded. Let's have the right one."
+      data-tags="VC,Funding,Equity,Industry"
+      data-content="<p>Every year the data comes out. Every year people are surprised. And every year the industry publishes a think-piece about pipeline, reaches no structural conclusions, and waits for next year.</p><p>The funding gap is not a mystery. It is a predictable outcome of a system where the people who control capital allocation tend to fund people who look, talk, and move like them — and call it pattern recognition.</p><h3>Pattern recognition is not neutral</h3><p>When investors say they're backing founders they believe in, they often mean founders who remind them of founders who succeeded before. The problem is that those founders were not a representative sample.</p><blockquote>What we call pattern recognition often just means: you remind me of someone I already trusted.</blockquote><p>Fixing it requires structural intervention — diverse decision-makers, blind first screens, explicit criteria — not just good intentions and panel events.</p>">
+      <div class="essay-bar"></div>
+      <div class="essay-body">
+        <div class="essay-top"><span class="essay-type">VC & Funding</span><span class="essay-read">7 min</span></div>
+        <h3 class="essay-title">The VC funding gap is not a pipeline problem. It's a power problem.</h3>
+        <p class="essay-excerpt">We've been having the wrong conversation. Let's have the right one about what actually drives the funding gap.</p>
+        <div class="essay-footer"><span class="essay-date">December 2025</span><span class="essay-arrow">→</span></div>
+      </div>
+    </div>
+
+    <div class="essay-card type-deep sr" data-etype="deep" data-etype-label="Deep Dive"
+      data-title="What consulting taught me about building a company"
+      data-date="January 2026" data-read="6 min"
+      data-lead="Three years inside strategy consulting, then the startup world. Here's what transferred — and what absolutely didn't."
+      data-tags="Startups,Consulting,Strategy,Operations"
+      data-content="<p>Consulting gives you an extraordinary education in problem-solving under constraint. You learn to think in frameworks, communicate to a senior audience, and synthesise complex information quickly.</p><p>What consulting does not prepare you for is the <strong>emotional reality of ownership</strong>.</p><h3>The framework trap</h3><p>In consulting, the framework is a tool. In a startup, founders often make the mistake of worshipping it. They build decks that would satisfy a McKinsey partner and are surprised when the market doesn't respond to clean slides.</p><blockquote>Consulting teaches you to solve other people's problems well. Building a company requires you to be deeply, uncomfortably invested in your own.</blockquote><p>The best founder-consultants keep the discipline and shed the detachment. That combination — rigour without distance — is rare. But it's the thing.</p>">
+      <div class="essay-bar"></div>
+      <div class="essay-body">
+        <div class="essay-top"><span class="essay-type">Deep Dive</span><span class="essay-read">6 min</span></div>
+        <h3 class="essay-title">What consulting taught me about building a company</h3>
+        <p class="essay-excerpt">Three years inside strategy consulting, then the startup world. Here's what transferred — and what absolutely didn't.</p>
+        <div class="essay-footer"><span class="essay-date">January 2026</span><span class="essay-arrow">→</span></div>
+      </div>
+    </div>
+
+    <div class="essay-card type-framework sr" data-etype="framework" data-etype-label="Framework"
+      data-title="The pre-mortem: the most underused tool in any founder's toolkit"
+      data-date="August 2025" data-read="4 min"
+      data-lead="Before you ask what could go right, ask what will definitely go wrong. The exercise will save you months."
+      data-tags="Startups,Strategy,Tools,Frameworks"
+      data-content="<p>A pre-mortem is simple: before launching something, you imagine it has already failed, and you work backwards to figure out why. Almost no early-stage team uses it consistently, and I don't fully understand why.</p><h3>How to run one</h3><p>Gather your team. Tell them the project launched and failed spectacularly. Ask each person to independently write the most plausible reasons for failure. Then compare notes.</p><p>The risks that appear repeatedly are your real risks. The ones only one person mentions are worth investigating — they may be seeing something everyone else has normalised.</p><blockquote>The pre-mortem doesn't make you pessimistic. It makes you specific about what you're betting on.</blockquote>">
+      <div class="essay-bar"></div>
+      <div class="essay-body">
+        <div class="essay-top"><span class="essay-type">Framework</span><span class="essay-read">4 min</span></div>
+        <h3 class="essay-title">The pre-mortem: the most underused tool in any founder's toolkit</h3>
+        <p class="essay-excerpt">Before you ask what could go right, ask what will definitely go wrong. It will save you months.</p>
+        <div class="essay-footer"><span class="essay-date">August 2025</span><span class="essay-arrow">→</span></div>
+      </div>
+    </div>
+
+    <div class="essay-card type-opinion sr" data-etype="opinion" data-etype-label="Opinion"
+      data-title="Dear industry: we need to talk about the talent pipeline"
+      data-date="March 2026" data-read="5 min"
+      data-lead="Blunt, honest, and maybe a little uncomfortable. But we're not saying it enough."
+      data-tags="Industry,Talent,Leadership,Hiring"
+      data-content="<p>I've sat in enough rooms to know that the talent pipeline conversation is happening everywhere — and going nowhere. We talk about it in panels, acknowledge it in reports, and then do essentially nothing structurally different.</p><h3>The real problem</h3><p>We've confused <strong>visibility with access</strong>. Putting one person from an underrepresented background on a stage is not the same as building a system where they can enter, grow, and lead. One is optics. The other is architecture.</p><blockquote>You cannot fix a pipeline problem with visibility alone. You fix it with access, sponsorship, and the willingness to share power.</blockquote><p>Sponsorship over mentorship. Structural entry points over one-off internship schemes. Promotion criteria that don't invisibly penalise people for not playing golf or going to the right schools.</p>">
+      <div class="essay-bar"></div>
+      <div class="essay-body">
+        <div class="essay-top"><span class="essay-type">Opinion</span><span class="essay-read">5 min</span></div>
+        <h3 class="essay-title">Dear industry: we need to talk about the talent pipeline</h3>
+        <p class="essay-excerpt">Blunt, honest, and maybe a little uncomfortable — but someone has to say it plainly.</p>
+        <div class="essay-footer"><span class="essay-date">March 2026</span><span class="essay-arrow">→</span></div>
+      </div>
+    </div>
+
+    <div class="essay-card type-opinion sr" data-etype="opinion" data-etype-label="Opinion"
+      data-title="On the performance of busyness and what it's actually costing us"
+      data-date="July 2025" data-read="4 min"
+      data-lead="Busyness has become a status signal in professional culture. It's making us worse at the work we're supposedly so busy doing."
+      data-tags="Industry,Culture,Leadership,Work"
+      data-content="<p>Somewhere along the way, being busy became something to perform rather than manage. The packed calendar became a symbol of importance. And somewhere in that shift, actual output became secondary to the performance of effort.</p><h3>The cost</h3><p>The performance of busyness crowds out thinking. And thinking — actual, sustained, uninterrupted thinking — is where the valuable work happens. The decisions that actually matter.</p><blockquote>Busyness is not evidence of impact. In many cases it is evidence of the opposite.</blockquote><p>The most effective people I've worked with protect time to think. Their calendars have white space. And the work they produce reflects the fact that someone had time to actually think about it.</p>">
+      <div class="essay-bar"></div>
+      <div class="essay-body">
+        <div class="essay-top"><span class="essay-type">Opinion</span><span class="essay-read">4 min</span></div>
+        <h3 class="essay-title">On the performance of busyness and what it's actually costing us</h3>
+        <p class="essay-excerpt">Busyness has become a status signal. I think it's making us worse at the work we're supposedly doing.</p>
+        <div class="essay-footer"><span class="essay-date">July 2025</span><span class="essay-arrow">→</span></div>
+      </div>
+    </div>
+
+    <div class="essay-card type-vc sr" data-etype="vc" data-etype-label="VC & Funding"
+      data-title="African Startup Ecosystem 2025: What the data actually shows"
+      data-date="April 2026" data-read="9 min"
+      data-lead="Cutting through the headlines on African tech funding — what's growing, what's contracting, and what the narratives are missing."
+      data-tags="Africa,VC,Startups,Data,Emerging Markets"
+      data-content="<p>The headlines alternate between extreme optimism and extreme pessimism about African tech. Neither is particularly useful if you're trying to understand what's actually happening in the ecosystem.</p><h3>What the data shows</h3><p>Funding volumes contracted in 2023 and 2024 from the peak of 2022 — this is true and not unique to Africa. What's more interesting is <strong>where the money went</strong>: fintech maintained its dominance, but agritech and climate-tech saw proportionally larger increases in deal count even as ticket sizes shrank.</p><p>The geographic concentration also shifted. More deals outside of the traditional Lagos–Nairobi–Cape Town triangle than in previous years. Early signals worth watching.</p><blockquote>The correction revealed which investors were opportunistic and which were genuinely building for the long term. Both groups are now much easier to identify.</blockquote>">
+      <div class="essay-bar"></div>
+      <div class="essay-body">
+        <div class="essay-top"><span class="essay-type">VC & Funding</span><span class="essay-read">9 min</span></div>
+        <h3 class="essay-title">African Startup Ecosystem 2025: What the data actually shows</h3>
+        <p class="essay-excerpt">Cutting through the headlines — what's growing, what's contracting, and what the narratives are missing.</p>
+        <div class="essay-footer"><span class="essay-date">April 2026</span><span class="essay-arrow">→</span></div>
+      </div>
+    </div>
+
+    <div class="essay-card type-framework sr" data-etype="framework" data-etype-label="Framework"
+      data-title="How to structure your first board meeting as a founder"
+      data-date="February 2026" data-read="5 min"
+      data-lead="Most first-time founders walk into board meetings underprepared. Here's the framework that changes that."
+      data-tags="Startups,Governance,Founders,Frameworks"
+      data-content="<p>The first board meeting sets the tone for every board meeting after it. Founders who walk in underprepared spend the next twelve months playing catch-up with their own investors. Founders who walk in with a clear format own the room from day one.</p><h3>The structure</h3><p>Lead with headlines, not details. Your board should know the three most important things about your business in the first five minutes. Everything else is context.</p><p>Present the problems clearly. Boards cannot help you with problems you haven't named. Naming them is not weakness — it's what the relationship is for.</p><blockquote>A board meeting where everything looks fine is a wasted opportunity. The best ones are honest about what's hard.</blockquote>">
+      <div class="essay-bar"></div>
+      <div class="essay-body">
+        <div class="essay-top"><span class="essay-type">Framework</span><span class="essay-read">5 min</span></div>
+        <h3 class="essay-title">How to structure your first board meeting as a founder</h3>
+        <p class="essay-excerpt">Most first-time founders walk in underprepared. Here's the framework that changes that.</p>
+        <div class="essay-footer"><span class="essay-date">February 2026</span><span class="essay-arrow">→</span></div>
+      </div>
+    </div>
+
+    <div class="essay-card type-deep sr" data-etype="deep" data-etype-label="Deep Dive"
+      data-title="B2B SaaS in emerging markets: the adoption curve nobody's talking about"
+      data-date="November 2025" data-read="8 min"
+      data-lead="The Western B2B SaaS playbook doesn't port cleanly to emerging markets. Here's what actually works."
+      data-tags="B2B,SaaS,Emerging Markets,Strategy"
+      data-content="<p>The default assumption among founders building B2B SaaS for emerging markets is that the product is the hard part. In practice, the product is rarely the hard part. Distribution, trust-building, and payment infrastructure are the hard parts.</p><h3>The adoption curve</h3><p>Enterprise software adoption in emerging markets follows a fundamentally different curve than the West. Buying decisions are more relationship-dependent. Procurement cycles are longer. Champions inside organisations have less autonomy.</p><p>This doesn't mean the opportunity isn't there. It means the go-to-market strategy needs to be built for the actual environment, not the environment the model assumes.</p><blockquote>The playbook that worked in San Francisco will get you to your first ten customers in Lagos. It will not get you to your first hundred.</blockquote>">
+      <div class="essay-bar"></div>
+      <div class="essay-body">
+        <div class="essay-top"><span class="essay-type">Deep Dive</span><span class="essay-read">8 min</span></div>
+        <h3 class="essay-title">B2B SaaS in emerging markets: the adoption curve nobody's talking about</h3>
+        <p class="essay-excerpt">The Western playbook doesn't port cleanly. Here's what actually works in emerging market B2B.</p>
+        <div class="essay-footer"><span class="essay-date">November 2025</span><span class="essay-arrow">→</span></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ═══ DATA & ANALYSIS ═══ -->
+<div class="sec-div sr"><span class="sec-div-num">03</span><div class="sec-div-line"></div><span class="sec-div-label">Data & Industry Analysis</span><div class="sec-div-line"></div></div>
+
+<section class="analysis-section sr">
+  <div class="analysis-intro">
+    <p class="analysis-eyebrow">Technical Work</p>
+    <h2 class="analysis-title">Numbers with<br><em>a point of view.</em></h2>
+    <p class="analysis-desc">Dashboards, spreadsheet models, and research reports — built on real data, designed to be useful. Download, interact with, or explore directly from here.</p>
+  </div>
+
+  <div class="tool-tabs sr">
+    <button class="ttab active" data-tool="all">All Work</button>
+    <button class="ttab" data-tool="tableau">Tableau</button>
+    <button class="ttab" data-tool="powerbi">Power BI</button>
+    <button class="ttab" data-tool="excel">Excel / Sheets</button>
+    <button class="ttab" data-tool="report">Reports</button>
+  </div>
+
+  <div class="analysis-grid sr">
+    <div class="acard" data-tool="tableau"><span class="tool-badge tb-tableau">📊 Tableau</span><h3 class="acard-title">African Startup Funding Landscape 2025</h3><p class="acard-desc">Interactive breakdown of VC deal flow, sector distribution, and geography across Sub-Saharan Africa with YoY comparisons.</p><div class="acard-foot"><span class="acard-date">May 2026</span><a href="#" class="open-link ol-tableau" target="_blank">Open dashboard ↗</a></div></div>
+    <div class="acard" data-tool="powerbi"><span class="tool-badge tb-powerbi">⚡ Power BI</span><h3 class="acard-title">Consulting Sector Revenue Trends Q1–Q4 2025</h3><p class="acard-desc">Revenue performance, headcount shifts, and margin analysis across Big 4 and boutique firms from public filings.</p><div class="acard-foot"><span class="acard-date">April 2026</span><a href="#" class="open-link ol-powerbi" target="_blank">Open in Power BI ↗</a></div></div>
+    <div class="acard" data-tool="excel"><span class="tool-badge tb-excel">📗 Excel / Sheets</span><h3 class="acard-title">Pre-Seed Valuation Benchmarking Model</h3><p class="acard-desc">Benchmark pre-seed valuations by sector, geography, and founding team profile. Download and adapt directly.</p><div class="acard-foot"><span class="acard-date">March 2026</span><a href="#" class="open-link ol-excel" target="_blank">Download model ↗</a></div></div>
+    <div class="acard" data-tool="report"><span class="tool-badge tb-report">📄 Report</span><h3 class="acard-title">The State of B2B SaaS in Emerging Markets</h3><p class="acard-desc">12-page research report on SaaS adoption curves, pricing strategies, and retention benchmarks across Nigeria, Kenya, and Egypt.</p><div class="acard-foot"><span class="acard-date">February 2026</span><a href="#" class="open-link ol-report" target="_blank">Read report ↗</a></div></div>
+    <div class="acard" data-tool="tableau"><span class="tool-badge tb-tableau">📊 Tableau</span><h3 class="acard-title">Talent Mobility in Professional Services 2024–25</h3><p class="acard-desc">Tracking movement of mid-to-senior professionals between consulting, strategy, and startups. Where people are going and why.</p><div class="acard-foot"><span class="acard-date">January 2026</span><a href="#" class="open-link ol-tableau" target="_blank">Open dashboard ↗</a></div></div>
+    <div class="acard" data-tool="excel"><span class="tool-badge tb-excel">📗 Excel / Sheets</span><h3 class="acard-title">Startup Runway Calculator — Extended Model</h3><p class="acard-desc">Monthly burn, hiring scenarios, and revenue ramp sensitivity analysis for early-stage teams managing first institutional capital.</p><div class="acard-foot"><span class="acard-date">December 2025</span><a href="#" class="open-link ol-excel" target="_blank">Download ↗</a></div></div>
+  </div>
+
+  <!-- EMBED AREA -->
+  <div class="sr" style="margin-top:3rem">
+    <div class="embed-wrap">
+      <div class="embed-bar">
+        <span class="embed-bar-title">Live Dashboard / Report Embed</span>
+        <div class="embed-bar-tools">
+          <a href="#" class="etool">Fullscreen ↗</a>
+          <a href="#" class="etool">Download</a>
+          <a href="#" class="etool">Share</a>
+        </div>
+      </div>
+      <div class="embed-placeholder">
+        <div class="embed-icon">📊</div>
+        <p class="embed-msg"><strong>Paste your Tableau, Power BI, or Google Looker embed code here.</strong><br>Dashboards render live and visitors can interact with your data without leaving the page.</p>
+        <span class="embed-hint">Paste iframe embed code here</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ PODCAST ═══ -->
+<div class="sec-div sr" id="podcast"><span class="sec-div-num">04</span><div class="sec-div-line"></div><span class="sec-div-label">The Podcast</span><div class="sec-div-line"></div></div>
+
+<section class="podcast-section sr">
+  <div class="podcast-inner">
+    <div class="pod-left">
+      <p class="pod-eyebrow">Coming soon</p>
+      <h2 class="pod-title">Ideas worth<br><em>saying out loud.</em></h2>
+      <p class="pod-desc">A podcast about startups, venture capital, consulting, and the honest conversations the industry keeps having off the record. Founders, operators, investors — no performance, just substance.</p>
+      <div class="pod-topics">
+        <span class="pod-tag">Startup Building</span>
+        <span class="pod-tag">VC & Funding</span>
+        <span class="pod-tag">Consulting</span>
+        <span class="pod-tag">Industry Trends</span>
+        <span class="pod-tag">Founder Journeys</span>
+        <span class="pod-tag">Emerging Markets</span>
+      </div>
+      <a href="#" class="btn-pod">Notify me when it launches <span>→</span></a>
+    </div>
+    <div class="pod-right">
+      <div class="pod-card"><p class="pod-card-ep">Episode 01 — Coming Soon</p><p class="pod-card-title">The funding landscape nobody's talking about honestly</p><p class="pod-card-meta">~45 min · Oyinloluwa + guest</p></div>
+      <div class="pod-card"><p class="pod-card-ep">Episode 02 — Coming Soon</p><p class="pod-card-title">What does it actually take to raise a Series A in 2026?</p><p class="pod-card-meta">~40 min · Oyinloluwa + guest</p></div>
+      <div class="pod-card"><p class="pod-card-ep">Episode 03 — Coming Soon</p><p class="pod-card-title">From consulting to founder: the transition nobody prepares you for</p><p class="pod-card-meta">~50 min · Oyinloluwa solo</p></div>
+      <div class="pod-soon"><p class="pod-soon-text">Subscribe to be first to know when episodes drop →</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ VIDEO ═══ -->
+<div class="sec-div light sr"><span class="sec-div-num">05</span><div class="sec-div-line"></div><span class="sec-div-label">Videos</span><div class="sec-div-line"></div></div>
+
+<section class="video-section sr">
+  <p class="video-eyebrow">Watch</p>
+  <h2 class="video-title">Startup talk<br><em>on camera.</em></h2>
+  <div class="video-grid">
+    <div class="video-card">
+      <div class="video-thumb"><div class="vthumb-bg g">📈</div><span class="vtype-badge">▶ Video</span><div class="play-btn">▶</div></div>
+      <div class="video-body"><p class="video-cat">Startup Talk</p><p class="video-title-sm">Why your pre-seed pitch is failing</p><p class="video-meta">12 min · May 2026</p></div>
+    </div>
+    <div class="video-card">
+      <div class="video-thumb"><div class="vthumb-bg o">💡</div><span class="vtype-badge">▶ Video</span><div class="play-btn">▶</div></div>
+      <div class="video-body"><p class="video-cat">VC & Funding</p><p class="video-title-sm">Reading a term sheet for the first time</p><p class="video-meta">18 min · March 2026</p></div>
+    </div>
+    <div class="video-card video-coming">
+      <div class="coming-inner"><div class="coming-icon">🎬</div><p class="coming-label">More coming</p><p class="coming-title">Videos dropping soon</p><p class="coming-sub">Subscribe to the newsletter to know when new content goes up.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- NEWSLETTER -->
+<div class="nl-section sr">
+  <div class="nl-left">
+    <p class="nl-eyebrow">Stay close</p>
+    <h3 class="nl-title">New analysis,<br>when it's <em>ready.</em></h3>
+    <p class="nl-sub">Deep dives, data reports, podcast episodes, and frameworks — straight to your inbox when they're published. No noise in between.</p>
+  </div>
+  <div class="nl-right">
+    <div class="nl-form"><input class="nl-input" type="email" placeholder="your@email.com"><button class="nl-btn">Subscribe</button></div>
+    <p class="nl-note">No schedule. No spam. Just the work.</p>
+  </div>
+</div>
+
+<footer>
+  <a href="index.html" class="f-logo">Oyinloluwa<b>.</b></a>
+  <ul class="f-links">
+    <li><a href="thoughts.html">Thoughts</a></li>
+    <li><a href="#">Creative</a></li>
+    <li><a href="#">Listen</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="#">Contact</a></li>
+  </ul>
+  <span class="f-copy">© 2026 Oyinloluwa · Startup Talk</span>
+</footer>
+
+<!-- PANEL -->
+<div class="overlay" id="overlay"></div>
+<div class="panel" id="panel">
+  <div class="panel-header">
+    <div class="panel-meta">
+      <span class="panel-badge" id="pbadge"></span>
+      <h2 class="panel-title" id="ptitle"></h2>
+      <p class="panel-byline" id="pbyline"></p>
+    </div>
+    <button class="panel-close" id="pclose">✕</button>
+  </div>
+  <div class="panel-body">
+    <p class="panel-lead" id="plead"></p>
+    <div class="panel-content" id="pcontent"></div>
+  </div>
+  <div class="panel-footer">
+    <div class="panel-tags" id="ptags"></div>
+    <button class="panel-share" onclick="navigator.clipboard?.writeText(window.location.href);this.textContent='Copied!';setTimeout(()=>this.textContent='Share →',2000)">Share →</button>
+  </div>
+</div>
+
+<script>
+const dot=document.getElementById('dot'),ring=document.getElementById('ring');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;dot.style.left=mx+'px';dot.style.top=my+'px'});
+(function loop(){rx+=(mx-rx)*.11;ry+=(my-ry)*.11;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(loop)})();
+document.querySelectorAll('a,button,.essay-card,.acard,.video-card,.pod-card,.feat-card').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{dot.classList.add('sm');ring.classList.add('sm')});
+  el.addEventListener('mouseleave',()=>{dot.classList.remove('sm');ring.classList.remove('sm')});
+});
+
+const obs=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('on')}),{threshold:.07});
+document.querySelectorAll('.sr').forEach(el=>obs.observe(el));
+
+/* ESSAY FORMAT FILTER */
+const typeColors={
+  deep:{bg:'#D6E8C4',color:'#2D5016'},
+  vc:{bg:'#F0D9C8',color:'#C4622D'},
+  framework:{bg:'#F5ECC4',color:'#B8961A'},
+  opinion:{bg:'#EDE8F5',color:'#5B3EA6'}
+};
+const ecards=document.querySelectorAll('.essay-card');
+const ecount=document.getElementById('essay-count');
+document.querySelectorAll('[data-filter]').forEach(btn=>{
+  btn.addEventListener('click',function(){
+    document.querySelectorAll('[data-filter]').forEach(b=>b.classList.remove('active'));
+    this.classList.add('active');
+    const f=this.dataset.filter;
+    let v=0;
+    ecards.forEach(c=>{const show=f==='all'||c.dataset.etype===f;c.classList.toggle('hidden',!show);if(show)v++});
+    ecount.textContent=v+' piece'+(v===1?'':'s');
+  });
+});
+
+/* TOOL FILTER */
+const acards=document.querySelectorAll('.acard');
+document.querySelectorAll('[data-tool]').forEach(btn=>{
+  btn.addEventListener('click',function(){
+    document.querySelectorAll('[data-tool]').forEach(b=>b.classList.remove('active'));
+    this.classList.add('active');
+    const t=this.dataset.tool;
+    acards.forEach(c=>c.classList.toggle('hidden',t!=='all'&&c.dataset.tool!==t));
+  });
+});
+
+/* PANEL */
+const overlay=document.getElementById('overlay'),panel=document.getElementById('panel'),pclose=document.getElementById('pclose');
+function openPanel(el){
+  const etype=el.dataset.etype||el.dataset.type||'deep';
+  const cols=typeColors[etype]||{bg:'#D6E8C4',color:'#2D5016'};
+  const badge=document.getElementById('pbadge');
+  badge.textContent=el.dataset.etypeLabel||el.dataset.typeLabel||etype;
+  badge.style.background=cols.bg;badge.style.color=cols.color;
+  document.getElementById('ptitle').textContent=el.dataset.title||'';
+  document.getElementById('pbyline').textContent=(el.dataset.date||'')+' · '+(el.dataset.read||'');
+  document.getElementById('plead').textContent=el.dataset.lead||'';
+  document.getElementById('pcontent').innerHTML=el.dataset.content||'';
+  const tagsEl=document.getElementById('ptags');tagsEl.innerHTML='';
+  (el.dataset.tags||'').split(',').forEach(t=>{if(!t.trim())return;const s=document.createElement('span');s.className='panel-tag';s.textContent=t.trim();tagsEl.appendChild(s)});
+  panel.querySelector('.panel-body').scrollTop=0;
+  overlay.classList.add('open');panel.classList.add('open');document.body.style.overflow='hidden';
+}
+function closePanel(){overlay.classList.remove('open');panel.classList.remove('open');document.body.style.overflow=''}
+document.querySelectorAll('.essay-card').forEach(c=>c.addEventListener('click',()=>openPanel(c)));
+document.querySelectorAll('.open-panel-btn').forEach(btn=>btn.addEventListener('click',function(){
+  const card=this.closest('[data-title]');if(card)openPanel(card);
+}));
+pclose.addEventListener('click',closePanel);
+overlay.addEventListener('click',closePanel);
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closePanel()});
+</script>
+</body>
+</html>
