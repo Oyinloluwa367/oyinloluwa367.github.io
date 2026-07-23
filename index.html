@@ -9,22 +9,13 @@
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 :root{
-  --cream:#FAF7F2;
-  --warm:#FFFDF9;
-  --ink:#18130F;
-  --ink2:#3A3028;
-  --muted:#9A8778;
-  --accent:#C4622D;
-  --asoft:#F0D9C8;
-  --green:#2D5016;
-  --gsoft:#D6E8C4;
-  --b:rgba(24,19,15,0.1);
-  --bh:rgba(24,19,15,0.18);
+  --cream:#FAF7F2;--warm:#FFFDF9;--ink:#18130F;--ink2:#3A3028;
+  --muted:#9A8778;--accent:#C4622D;--asoft:#F0D9C8;
+  --green:#2D5016;--gsoft:#D6E8C4;
+  --b:rgba(24,19,15,0.1);--bh:rgba(24,19,15,0.18);
 }
 html{scroll-behavior:smooth}
 body{background:var(--cream);color:var(--ink);font-family:'DM Sans',sans-serif;overflow-x:hidden;cursor:none}
-
-/* CURSOR */
 #dot{width:8px;height:8px;background:var(--accent);border-radius:50%;position:fixed;top:0;left:0;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width .15s,height .15s}
 #ring{width:32px;height:32px;border:1px solid var(--accent);border-radius:50%;position:fixed;top:0;left:0;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);opacity:.5;transition:all .3s ease}
 
@@ -36,6 +27,13 @@ nav.solid{background:rgba(250,247,242,.95);backdrop-filter:blur(16px);border-bot
 .nav-links{display:flex;gap:2.5rem;list-style:none}
 .nav-links a{font-size:12px;font-weight:400;color:var(--muted);text-decoration:none;letter-spacing:.08em;text-transform:uppercase;transition:color .2s}
 .nav-links a:hover,.nav-links a.active{color:var(--ink)}
+.hamburger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:none;padding:4px}
+.hamburger span{display:block;width:24px;height:1.5px;background:var(--ink);transition:all .3s}
+.mobile-menu{display:none;position:fixed;inset:0;background:var(--cream);z-index:99;flex-direction:column;align-items:center;justify-content:center;gap:2.5rem}
+.mobile-menu.open{display:flex}
+.mobile-menu a{font-family:'Bodoni Moda',serif;font-size:2.2rem;font-weight:700;color:var(--ink);text-decoration:none;letter-spacing:-.01em;transition:color .2s}
+.mobile-menu a:hover{color:var(--accent)}
+.mobile-menu-close{position:absolute;top:1.5rem;right:1.5rem;background:none;border:none;font-size:2rem;color:var(--ink);cursor:none}
 
 /* HERO */
 .hero{height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;overflow:hidden;text-align:center;padding:0 2rem}
@@ -56,7 +54,7 @@ nav.solid{background:rgba(250,247,242,.95);backdrop-filter:blur(16px);border-bot
 .ticker-track span{white-space:nowrap;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);padding:0 2rem}
 .ticker-track span.dot{color:var(--accent);padding:0 .5rem}
 
-/* WORLDS SECTION */
+/* WORLDS */
 .worlds{padding:8rem 4rem;display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:var(--bh)}
 .world-card{background:var(--cream);padding:3.5rem 2.5rem;position:relative;overflow:hidden;transition:background .35s}
 .world-card:hover{background:var(--warm)}
@@ -96,23 +94,62 @@ nav.solid{background:rgba(250,247,242,.95);backdrop-filter:blur(16px);border-bot
 
 /* FOOTER */
 footer{border-top:1px solid var(--b);padding:2.5rem 4rem;display:flex;align-items:center;justify-content:space-between}
+.footer-left{display:flex;flex-direction:column;gap:.4rem}
+.footer-socials{display:flex;gap:2rem;align-items:center}
+.social-link{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color .2s;position:relative}
+.social-link::after{content:'';position:absolute;bottom:-2px;left:0;right:0;height:1px;background:var(--accent);transform:scaleX(0);transform-origin:left;transition:transform .25s ease}
+.social-link:hover{color:var(--ink)}
+.social-link:hover::after{transform:scaleX(1)}
 .footer-logo{font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:600;color:var(--ink)}
 .footer-logo span{color:var(--accent)}
 .footer-note{font-size:12px;color:var(--muted);letter-spacing:.04em}
 
-/* SCROLL REVEAL */
 .reveal{opacity:0;transform:translateY(28px);transition:opacity .7s ease,transform .7s ease}
 .reveal.visible{opacity:1;transform:none}
 
 @keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
 @keyframes ticker{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 @keyframes scrollPulse{0%,100%{opacity:.3;transform:scaleY(.8)}50%{opacity:1;transform:scaleY(1)}}
+
+/* ── MOBILE ───────────────────────────────────── */
+@media(max-width:768px){
+  body{cursor:auto}
+  #dot,#ring{display:none}
+  nav{padding:0 1.5rem}
+  .nav-links{display:none}
+  .hamburger{display:flex}
+  .hero{padding:0 1.5rem}
+  .hero-h{font-size:clamp(2.6rem,11vw,4rem)}
+  .hero-sub{font-size:1.1rem}
+  .hero-pills{gap:.4rem}
+  .pill{font-size:10px;padding:5px 12px}
+  .worlds{padding:4rem 1.5rem;grid-template-columns:1fr}
+  .world-card{padding:2.5rem 1.5rem}
+  .manifesto{padding:5rem 1.5rem}
+  .tenets{padding:4rem 1.5rem}
+  .tenets-grid{grid-template-columns:1fr}
+  .tenet{padding:2rem 1.5rem}
+  .closing{padding:5rem 1.5rem}
+  .btn-group{flex-direction:column;align-items:center}
+  footer{padding:2rem 1.5rem;flex-direction:column;align-items:flex-start;gap:1.5rem}
+  .footer-socials{gap:1.2rem}
+}
 </style>
 </head>
 <body>
-
 <div id="dot"></div>
 <div id="ring"></div>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <button class="mobile-menu-close" id="menuClose">×</button>
+  <a href="index.html" onclick="closeMobileMenu()">Home</a>
+  <a href="about.html" onclick="closeMobileMenu()">About</a>
+  <a href="thoughts.html" onclick="closeMobileMenu()">Thoughts</a>
+  <a href="startup.html" onclick="closeMobileMenu()">Startup Talk</a>
+  <a href="creative.html" onclick="closeMobileMenu()">Creative</a>
+  <a href="startup.html#podcast" onclick="closeMobileMenu()">Podcast</a>
+</div>
 
 <nav id="nav">
   <a href="index.html" class="logo">Oyin<span>.</span></a>
@@ -123,9 +160,11 @@ footer{border-top:1px solid var(--b);padding:2.5rem 4rem;display:flex;align-item
     <li><a href="creative.html">Creative</a></li>
     <li><a href="startup.html#podcast">Podcast</a></li>
   </ul>
+  <button class="hamburger" id="hamburger" aria-label="Open menu">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
 
-<!-- HERO -->
 <section class="hero">
   <div class="hero-bg"></div>
   <div class="hero-line"></div>
@@ -146,7 +185,6 @@ footer{border-top:1px solid var(--b);padding:2.5rem 4rem;display:flex;align-item
   </div>
 </section>
 
-<!-- TICKER -->
 <div class="ticker-wrap">
   <div class="ticker-track">
     <span>Business Analyst</span><span class="dot">·</span>
@@ -166,7 +204,6 @@ footer{border-top:1px solid var(--b);padding:2.5rem 4rem;display:flex;align-item
   </div>
 </div>
 
-<!-- WORLDS -->
 <section class="worlds reveal">
   <div class="world-card" style="--accent-color:#C4622D">
     <div class="world-num">01 — The Professional</div>
@@ -178,7 +215,7 @@ footer{border-top:1px solid var(--b);padding:2.5rem 4rem;display:flex;align-item
     <div class="world-num">02 — The Creative</div>
     <h2 class="world-title">Art &amp; Expression</h2>
     <p class="world-desc">Paintings, sketches, mixed media. Visual storytelling and the quiet work of making things with your hands.</p>
-    <a href="#" class="world-link">Enter the Gallery →</a>
+    <a href="creative.html" class="world-link">Enter the Gallery →</a>
   </div>
   <div class="world-card" style="--accent-color:#9A8778">
     <div class="world-num">03 — The Thinker</div>
@@ -188,7 +225,6 @@ footer{border-top:1px solid var(--b);padding:2.5rem 4rem;display:flex;align-item
   </div>
 </section>
 
-<!-- MANIFESTO -->
 <section class="manifesto reveal">
   <p class="manifesto-label">On refusing to pick a lane</p>
   <p class="manifesto-text">
@@ -199,7 +235,6 @@ footer{border-top:1px solid var(--b);padding:2.5rem 4rem;display:flex;align-item
   </p>
 </section>
 
-<!-- TENETS -->
 <section class="tenets reveal">
   <div class="tenets-grid">
     <div class="tenet">
@@ -225,7 +260,6 @@ footer{border-top:1px solid var(--b);padding:2.5rem 4rem;display:flex;align-item
   </div>
 </section>
 
-<!-- CLOSING -->
 <section class="closing reveal">
   <h2 class="closing-h">Welcome to the<br><em>ecosystem.</em></h2>
   <p class="closing-sub">This isn't just a portfolio or a personal brand. It's a creative home. A living archive. A place to think out loud.</p>
@@ -237,29 +271,34 @@ footer{border-top:1px solid var(--b);padding:2.5rem 4rem;display:flex;align-item
 </section>
 
 <footer>
-  <div class="footer-logo">Oyin<span>.</span></div>
-  <p class="footer-note">A digital ecosystem — strategy, art, and everything in between.</p>
+  <div class="footer-left">
+    <div class="footer-logo">Oyin<span>.</span></div>
+    <p class="footer-note">A digital ecosystem — strategy, art, and everything in between.</p>
+  </div>
+  <div class="footer-socials">
+    <a href="https://www.instagram.com/oyin_olaoluwa/" target="_blank" rel="noopener" class="social-link">Instagram</a>
+    <a href="https://x.com/Oyin_olaoluwa" target="_blank" rel="noopener" class="social-link">Twitter / X</a>
+    <a href="https://www.linkedin.com/in/oyinloluwaogunseye" target="_blank" rel="noopener" class="social-link">LinkedIn</a>
+  </div>
 </footer>
 
 <script>
-// Cursor
-const dot = document.getElementById('dot');
-const ring = document.getElementById('ring');
+const dot=document.getElementById('dot'),ring=document.getElementById('ring');
 let mx=0,my=0,rx=0,ry=0;
 document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;dot.style.left=mx+'px';dot.style.top=my+'px'});
-(function animRing(){rx+=(mx-rx)*.12;ry+=(my-ry)*.12;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(animRing)})();
+(function a(){rx+=(mx-rx)*.12;ry+=(my-ry)*.12;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(a)})();
 document.querySelectorAll('a,button').forEach(el=>{
   el.addEventListener('mouseenter',()=>{dot.style.width='4px';dot.style.height='4px';ring.style.width='52px';ring.style.height='52px';ring.style.opacity='.2'});
   el.addEventListener('mouseleave',()=>{dot.style.width='8px';dot.style.height='8px';ring.style.width='32px';ring.style.height='32px';ring.style.opacity='.5'});
 });
-
-// Nav solidify
 const nav=document.getElementById('nav');
 window.addEventListener('scroll',()=>nav.classList.toggle('solid',scrollY>60));
-
-// Scroll reveal
-const obs=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')}),{threshold:.15});
+const obs=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('visible')}),{threshold:.15});
 document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+// Mobile menu
+function closeMobileMenu(){document.getElementById('mobileMenu').classList.remove('open')}
+document.getElementById('hamburger').addEventListener('click',()=>document.getElementById('mobileMenu').classList.add('open'));
+document.getElementById('menuClose').addEventListener('click',closeMobileMenu);
 </script>
 </body>
 </html>
